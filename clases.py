@@ -1,5 +1,5 @@
-class Coordenadas():
-    
+class Coordenadas:
+
     def __init__(self, cord1, cord2):
         self.cord1 = cord1
         self.cord2 = cord2
