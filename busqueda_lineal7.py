@@ -18,4 +18,4 @@ if __name__ == '__main__':
     nice = busqueda_lineal(objetivo, lista)
 
     print(lista)
-    print(f'{objetivo} {" está en la lista" if nice else " no está en la lista"}')
+    print(f'{objetivo} {"está en la lista" if nice else "no está en la lista"}')
