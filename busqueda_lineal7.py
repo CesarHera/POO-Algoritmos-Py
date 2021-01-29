@@ -19,7 +19,8 @@ if __name__ == '__main__':
 
     objetivo = int(input('¿Ingresa el número que quieres encontrar?: '))
     lista_tamaño = int(input('¿De qué tamaño genero la lista aleatoria?: '))
-    lista = [random.randint(1, 100) for i in range(lista_tamaño)]
+    # lista = [random.randint(1, objetivo) for i in range(lista_tamaño)]
+    lista = range(lista_tamaño) #Hago esto para obtener el peor de los casos
 
     start = time.time()
     contador, nice = busqueda_lineal(objetivo, lista)
