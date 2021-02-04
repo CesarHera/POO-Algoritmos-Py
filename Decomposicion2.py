@@ -22,4 +22,11 @@ class Motor:
         self.temperatura = 0
 
     def inyecta_gasolina(self, cantidad):
-        pass
+        print(f'Inyectando {cantidad} de gasolina')
+
+
+if __name__ == '__main__':
+
+    auto = Automovil('tesla', 's3', 'rojo')
+
+    auto.acelerar()
