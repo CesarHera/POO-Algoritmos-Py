@@ -53,8 +53,8 @@ class Asistente_Financiero_AI:
 📱Activos - Activos circulantes, activos no circulantes, activos diferidos
 📱Pasivos - Pasivos circulantes, pasivos no circulantes, pasivos diferidos
 📱Capital contable
-Si no comprendes algúnos de estos términos te sugiero que vayas a el apartado de <Definiciones> en el programa
-O bien si tienes todos los datos listos podemos comenzar""")
+Si no comprendes algúnos de estos términos te sugiero que vayas a el apartado de <Definiciones> en el Menú principal
+O bien, si tienes todos los datos listos podemos comenzar""")
             elección = self._seleccionador(('Comenzar', 'Ir al menú principal', 'Elegir otro estado finnciero'))
             if elección == '1':
                 print('--> Balance general')
@@ -74,14 +74,99 @@ O bien si tienes todos los datos listos podemos comenzar""")
 
 
     def balance_general(self):
-        print('Generando balance general')
+        print('---')
+        print('GENERANDO BALANCE GENERAL')
+        print('---')
+        print('Empezaremos sumando todos los activos, después los pasivos y por último el capital contable')
+
+        print('DECLARANDO ACTIVOS')
+        activos_circulantes_nombres, activos_circulantes_valores = self.declarar('¿Cuántos activos circulantes vas a declarar?: ', 'activos circulantes')
+        activos = self.manipular_lista(activos_circulantes_valores, tipo='suma')
+        print(f'Total actual de activos = {activos}')
+
+        activos_no_circulantes_nombres, activos_no_circulantes_valores = self.declarar('¿Cuántos activos no circulantes vas a declarar?: ', 'activos no circulantes', tipo='depreciable')
+        activos = self.manipular_lista(activos_no_circulantes_valores, tipo='suma', sumatoria=activos)
+        print(f'Total actual de activos = {activos}')
+
+        activos_diferidos_nombres, activos_diferidos_valores = self.declarar('¿Cuántos activos diferidos vas a declarar?: ', 'activos diferos')
+        activos = self.manipular_lista(activos_diferidos_valores, tipo='suma', sumatoria=activos)
+        print(f'TOTAL ACTVOS = {activos}')
+
+        print('DECLARANDO PASIVOS')
+        pasivos_circulantes_nombres, pasivos_circulantes_valores = self.declarar('¿Cuántos pasivos circulantes vas a declarar?: ', 'pasivos circulantes')
+        pasivos = self.manipular_lista(pasivos_circulantes_valores, tipo='suma')
+        print(f'Total actual de pasivos = {pasivos}')
+
+        pasivos_no_circulantes_nombres, pasivos_no_circulantes_valores = self.declarar('¿Cuántos pasivos no circulantes vas a declarar?: ', 'pasivos no circulantes')
+        pasivos = self.manipular_lista(pasivos_no_circulantes_valores, tipo='suma', sumatoria=pasivos)
+        print(f'Total actual de pasivos = {pasivos}')
+
+        pasivos_diferidos_nombres, pasivos_diferidos_valores = self.declarar('¿Cuántos pasivos diferidos vas a declarar?: ', 'pasivos diferos')
+        pasivos = self.manipular_lista(pasivos_diferidos_valores, tipo='suma', sumatoria=pasivos)
+        print(f'TOTAL PASIVOS = {pasivos}')
+
+        print('DECLARANDO CAPITAL CONTABLE')
+        captial_contable_nombres, captial_contable_valores = self.declarar('¿Por cuántos elementos estará compuesto tu capital contable?: ', 'capital contable')
+        capital_contable = self.manipular_lista(captial_contable_valores, tipo='suma')
+        print(f'TOTAL CAPITAL CONTABLE = {capital_contable}')
+
+        print('-' * 80)
+        
+        
+
+    def declarar(self, texto, nombre_lista, tipo='default'):
+        nombres = []
+        valores = []
+
+        cuantas = input(texto)
+        try:
+            cuantas = int(cuantas)
+        except ValueError:
+            print('Ingresa un número')
+            return self.declarar(texto, nombre_lista)
+
+        if cuantas == 0:
+            nombres.append(f'No se declararon {nombre_lista}')
+            valores.append(0)
+            return nombres, valores
+
+        for i in range(cuantas):
+            nombre = input(f'¿Cómo se llama el valor número {i + 1}?: ')
+            nombres.append(nombre)
+            valor = int(input('¿Qué valor tiene?: '))
+            if tipo == 'depreciable':
+                depreciacion = int(input('¿Cuánto se ha depreciado (si no sabes teclea 0)?: '))
+                valor -= depreciacion
+            valores.append(valor)
+
+        return nombres, valores
+    
+    def manipular_lista(self, lista, tipo='default', sumatoria=0):
+        if tipo == 'values':
+            for i in lista.values():
+                sumatoria += i
+            return sumatoria
+        elif tipo == 'keys':
+            keys_list = []
+            for i in lista():
+                keys_list.append(i)
+            return keys_list
+        elif tipo == 'suma':
+            for i in lista:
+                sumatoria += i
+            return sumatoria
+        else:
+            print(tipo)
+            
+                
+
+
+                
 
 
 
 if __name__ == '__main__':
-    print("""Soy una vergota - Proyecto Ascesor Financiero
-    Vamos cesar, no te rindas, yo sé que puedes. No claudiques.
-    No pares. Recuerdalo, nadie se acuerda de los que se dieron por vencidos.""")
+    #No pospongas
 
     financiero = Asistente_Financiero_AI()
     financiero.iniciar()
